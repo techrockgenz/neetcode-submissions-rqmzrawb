@@ -1,0 +1,31 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+# h + k worst - n, h
+# Recursive DFS
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        res = root.val # Boundry root is None
+
+        def dfs(node):
+            nonlocal k, res
+            if not node:
+                return
+
+            dfs(node.left)
+            if k == 0: # Not only k input as zero, but also to stop processing k > nodes
+                return
+            k -= 1
+            if k == 0:
+                res = node.val
+                return    
+            
+            dfs(node.right)
+
+        dfs(root)
+        return res
